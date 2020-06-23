@@ -2,7 +2,8 @@ document.onreadystatechange = function() {
     if (document.readyState == 'complete') {
         
         const whatsapp = require('../../dist/whatsapp-client');
-        const fs = require('fs'); 
+        const fs = require('fs');
+        const path = require('path');
 
         console.log(whatsapp.isLogged());
 
@@ -10,14 +11,14 @@ document.onreadystatechange = function() {
             console.log(data);
         });
 
-        var samples = JSON.parse(fs.readFileSync('./example/sample/images.json').toString());
+        var samples = JSON.parse(fs.readFileSync(path.join(__dirname, '../', 'sample', 'images.json')).toString());
 
         var messages = [
-            {wid: '99865099', message: 'WhatsApp API', image: samples.image1},
-            {wid: '99865099', message: 'WhatsApp API', image: samples.image2},
-            {wid: '99865099', message: 'WhatsApp API', image: samples.image3},
-            {wid: '99865099', message: 'WhatsApp API', image: samples.image4},
-            {wid: '99865099', message: 'WhatsApp API', image: samples.image5}
+            {wid: '99865099', message: 'Mensagem 1', image: samples.image1},
+            {wid: '99865099', message: 'Mensagem 2', image: samples.image2},
+            {wid: '99865099', message: 'Mensagem 3', image: samples.image3},
+            {wid: '99865099', message: 'Mensagem 4', image: samples.image4},
+            {wid: '99865099', message: 'Mensagem 5', image: samples.image5}
         ];
 
         setTimeout(function() {
