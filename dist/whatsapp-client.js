@@ -54,7 +54,6 @@ function send(messages) {
 
         for (let index = 0; index < messages.length; index++) {
 
-            // IMAGEM E TEXTO
             if (messages[index].image) {
 
                 setTimeout(function () {
@@ -117,7 +116,6 @@ function send(messages) {
                 }, (index * 10000));
             }
 
-            // APENAS TEXTO
             if (!messages[index].image) {
 
                 setTimeout(function () {
