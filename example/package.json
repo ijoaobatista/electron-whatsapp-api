@@ -1,0 +1,28 @@
+{
+  "name": "electron-whatsapp-api",
+  "version": "0.0.1",
+  "description": "Electron WhatsApp API",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^9.0.5"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "WhatsApp",
+    "API",
+    "WhatsApp",
+    "Electron",
+    "JS",
+    "Electron",
+    "JS",
+    "Javascript",
+    "Npm",
+    "Node",
+    "API"
+  ],
+  "author": "João Batista",
+  "license": "GPL-3.0-or-later"
+}
