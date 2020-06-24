@@ -12,12 +12,12 @@ Este módulo foi desenvolvido com a finalidade de oferecer métodos automatizado
 
 ## Tópicos
 
-* [Começo rápido](#comeco-rapido)
-* [Módulos](#modulos)
-    * [whatsapp-main.js](#whatsapp-main.js)
-    * [whatsapp-client.js](#whatsapp-client.js)
-    * [Criando uma instância](#criando-uma-instancia)
-    * [Agente de usuário](#agente-de-usuario)
+* [Começo rápido](#comeco-rápido)
+* [Módulos](#módulos)
+    * [whatsapp-main.js](#whatsapp-mainjs)
+    * [whatsapp-client.js](#whatsapp-clientjs)
+    * [Criando uma instância](#criando-uma-instância)
+    * [Agente de usuário](#agente-de-usuário)
     * [Preload Script](#preload-script)
     * [Enviando mensagens](#enviando-mensagens)
 
