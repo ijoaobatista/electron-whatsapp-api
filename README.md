@@ -12,7 +12,7 @@ Este módulo foi desenvolvido com a finalidade de oferecer métodos automatizado
 
 ## Tópicos
 
-* [Começo rápido](#comeco-rápido)
+* [Começo rápido](#começo-rápido)
 * [Módulos](#módulos)
     * [whatsapp-main.js](#whatsapp-mainjs)
     * [whatsapp-client.js](#whatsapp-clientjs)
