@@ -102,7 +102,7 @@ Veja mais sobre as opções do ``BrowserWindow`` [aqui](https://www.electronjs.o
 **preload.js**
 
 ``` javascript
-document.onReadStateChange = function() {
+document.onreadystatechange = function() {
     if(document.readState == 'complete') {
         // Código aqui
         ...
