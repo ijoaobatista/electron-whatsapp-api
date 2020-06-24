@@ -10,6 +10,17 @@ Electron WhatsApp API é um módulo para o framework <a href="https://www.electr
 ## Electron WhtasApp Web API
 Este módulo foi desenvolvido com a finalidade de oferecer métodos automatizados sob a interface UI. Os métodos disponibilizados neste módulo trabalha totalmente com recursos abstratos de usuário, ou seja, simula ações básicas de envio comum de um usuário humano.
 
+## Tópicos
+
+* [Começo rápido](#comeco-rapido)
+* [Módulos](#modulos)
+    * [whatsapp-main.js](#whatsapp-main.js)
+    * [whatsapp-client.js](#whatsapp-client.js)
+    * [Criando uma instância](#criando-uma-instancia)
+    * [Agente de usuário](#agente-de-usuario)
+    * [Preload Script](#preload-script)
+    * [Enviando mensagens](#enviando-mensagens)
+
 ## Começo rápido
 Os módulos estão disponíveis no diretório ``/dist``. Está disponível um exemplo de implementação no diretório ``/example``. Siga esses comandos:
 * [Baixe este repositório](https://github.com/ijoaobatista/electron-whatsapp-api/archive/master.zip)
@@ -37,8 +48,8 @@ middleware|``BrowserWindow instance``|``function``|``object``
 
 Métodos|Parâmetros|Callback|Retorno
 -|-|-|-
-isLogged|||``boolean``
-getLogin||``function``|``string``
+isLogged|<div align="center">❌</div>|<div align="center">❌</div>|``boolean``
+getLogin|<div align="center">❌</div>|``function``|``string``
 send|``messages array``|``function``|``object``
 
 ### Criando uma instância
@@ -103,4 +114,29 @@ document.onReadStateChange = function() {
 Para utilizar os métodos de envios você deverá utilizar o módulo ``whatsapp-client.js`` na camada ``Renderer Process``. Exemplo:
 
 ``` javascript
+const whatsapp = require('Path para whatsapp-client.js');
+...
+
+// Enviando mensagem de texto
+const messages = [
+    {wid: 'Número de WhatsApp', message: 'Texto'},
+    {wid: 'Número de WhatsApp', message: 'Texto'},
+    ...
+];
+
+// Enviando mensagem com imagem e texto
+const messages = [
+    {wid: 'Número de WhatsApp', message: 'Texto', image: 'Base64'},
+    {wid: 'Número de WhatsApp', message: 'Texto', image: 'Base64'},
+    ...
+];
+
+// Enviando mensagem apenas com imagem
+const messages = [
+    {wid: 'Número de WhatsApp', message: '', image: 'Base64'},
+    {wid: 'Número de WhatsApp', message: '', image: 'Base64'},
+    ...
+];
+
+whatsapp.send(messages);
 ```
