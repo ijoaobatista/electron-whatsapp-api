@@ -41,5 +41,66 @@ isLogged|||``boolean``
 getLogin||``function``|``string``
 send|``messages array``|``function``|``object``
 
-## Métodos Main
-## Métodos Client
+### Criando uma instância
+Para criar uma instância você deverá utilizar o módulo ``whatsapp-main.js`` na camada ``Main Process``. Por exemplo:
+
+``` javascript
+const electron = require('electron');
+const whatsapp = require('Path para whatsapp-main.js')(electron);
+const { app, BrowserWindow } = electron;
+...
+app.on('ready', function() {
+    let window = new BrowserWindow({
+        ...
+    });
+    ...
+    whatsapp.middleware(window, function(data) {
+        ...
+    });
+});
+...
+```
+### Agente de usuário
+Por padrão, o ``User-Agent`` não é compatível com o WhatsApp Web. Para corrigir isso devemos informar qual vamos utilizar. Exemplo:
+
+``` javascript
+app.on('ready', function() {
+    app.userAgentFallback = 'User-Agent compatível';
+    ...
+});
+```
+Saiba mais sobre ``User-Agent`` [aqui](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent);
+
+### Preload Script
+É possível configurar a execução de scripts assim que uma nova instância do ``BrowserWindow`` é inicializada. Exemplo:
+
+**main.js**
+``` javascript
+...
+let window = new BrowserWindow({
+    ...
+    webPreferences: {
+        preload: 'Path para os script preload'
+    }
+});
+...
+```
+
+Veja mais sobre as opções do ``BrowserWindow`` [aqui](https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions).
+
+**preload.js**
+
+``` javascript
+document.onReadStateChange = function() {
+    if(document.readState == 'complete') {
+        // Código aqui
+        ...
+    }
+}
+```
+
+### Enviando mensagens
+Para utilizar os métodos de envios você deverá utilizar o módulo ``whatsapp-client.js`` na camada ``Renderer Process``. Exemplo:
+
+``` javascript
+```
