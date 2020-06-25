@@ -1,5 +1,5 @@
 <p align="center">
-<img src="src/logo.svg" alt="">
+<img width="400" src="src/logo.svg" alt="">
 </p>
 <h3 align="center">Electron WhatsApp Web API</h3>
 <p align="center">
