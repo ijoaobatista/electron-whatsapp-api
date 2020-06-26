@@ -14,11 +14,11 @@ document.onreadystatechange = function() {
         var samples = JSON.parse(fs.readFileSync(path.join(__dirname, '../', 'sample', 'images.json')).toString());
 
         var messages = [
-            {wid: '99865099', message: 'Mensagem 1', image: samples.image1},
-            {wid: '99865099', message: 'Mensagem 2', image: samples.image2},
-            {wid: '99865099', message: 'Mensagem 3', image: samples.image3},
-            {wid: '99865099', message: 'Mensagem 4', image: samples.image4},
-            {wid: '99865099', message: 'Mensagem 5', image: samples.image5}
+            {wid: 'número', message: 'Mensagem 1', image: samples.image1},
+            {wid: 'número', message: 'Mensagem 2', image: samples.image2},
+            {wid: 'número', message: 'Mensagem 3', image: samples.image3},
+            {wid: 'número', message: 'Mensagem 4', image: samples.image4},
+            {wid: 'número', message: 'Mensagem 5', image: samples.image5}
         ];
 
         setTimeout(function() {
