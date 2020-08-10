@@ -3,11 +3,12 @@ const { clipboard, ipcRenderer, nativeImage } = require('electron');
 var isSending = false;
 var messagesToSend = [];
 
+var index_message = 0;
+
 var loginSelector = '#app > div > div > div.landing-window > div.landing-main > div > div._2nIZM > div';
 var reloadCodeSelector = '#app > div > div > div.landing-window > div.landing-main > div > div._2nIZM > div > span > div';
 var sidebarSelector = '#side > header > div._3euVJ > div > span > div:nth-child(2) > div';
 var itemListUserSelector = '#app > div > div > div.YD4Yw > div._1-iDe._1xXdX > span > div > span > div > div._1qDvT._2wPpw > div:nth-child(1) > div > div > div:nth-child(2) > div > div';
-var inputNumberSelector = '#app > div > div > div.YD4Yw > div._1-iDe._1xXdX > span > div > span > div > div:nth-child(2) > div > label > div > div._3FRCZ.copyable-text.selectable-text';
 var sendTextButtonSelector = '#main > footer > div._3ee1T._1LkpH.copyable-area > div:nth-child(3) > button';
 var sendImageButtonSelector = '#app > div > div > div.YD4Yw > div._1-iDe.Wu52Z > span > div > span > div > div > div._2wPpw._1E3Yq > span > div > div';
 var inputAreaSelector = '#app > div > div > div.YD4Yw > div._1-iDe.Wu52Z > span > div > span > div > div';
@@ -38,136 +39,124 @@ var whatsapp = {
         return false;
     },
     send: function (messages) {
-        
+
         send(messages);
     }
 }
 
 function send(messages) {
 
-    let local_wid = JSON.parse(sessionStorage.getItem('last-wid')) || JSON.parse(localStorage.getItem('last-wid'));
-    let local_bid = JSON.parse(sessionStorage.getItem('WABrowserId')) || JSON.parse(localStorage.getItem('WABrowserId'));
-
     if (isSending == false) {
 
         isSending = true;
 
-        for (let index = 0; index < messages.length; index++) {
+        send_message(messages);
 
-            if (messages[index].image) {
-
-                setTimeout(function () {
-
-                    clipboard.writeText(messages[index].wid);
-                    fireMouseEvents(sidebarSelector);
-
-                    setTimeout(function () {
-                        ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index].wid, action: 'find' });
-                    }, 1000);
-
-                    setTimeout(function () {
-                        fireMouseEvents(itemListUserSelector);
-                    }, 2000);
-
-                    setTimeout(function () {
-                        clipboard.writeImage(nativeImage.createFromDataURL(messages[index].image));
-                    }, 3000);
-
-                    setTimeout(function () {
-                        ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index].image, action: 'input' });
-                    }, 4000);
-
-                    focusElement(inputAreaSelector, function () {
-
-                        setTimeout(function () {
-                            clipboard.writeText(messages[index].message);
-                        }, 1000);
-
-                        setTimeout(function () {
-                            ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index].message, action: 'label' });
-                        }, 2000);
-
-                        setTimeout(function () {
-                            fireMouseEvents(sendImageButtonSelector);
-                        }, 3000);
-
-                        setTimeout(function() {
-
-                            if (index == (messages.length - 1)) {
-
-                                if (messagesToSend.length > 0) {
-                                    
-                                    isSending = false;
-
-                                    setTimeout(function() {
-
-                                        whatsapp.send(messagesToSend[0]);
-                                        messagesToSend.shift();
-                                    }, 1000);
-                                }else {
-
-                                    isSending = false;
-                                }
-                            }
-                        }, 4000);
-                        
-                    }, false);
-
-                }, (index * 10000));
-            }
-
-            if (!messages[index].image) {
-
-                setTimeout(function () {
-
-                    clipboard.writeText(messages[index].wid);
-                    fireMouseEvents(sidebarSelector);
-
-                    setTimeout(function () {
-                        ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index].wid, action: 'find' });
-                    }, 1000);
-
-                    setTimeout(function () {
-                        fireMouseEvents(itemListUserSelector);
-                    }, 2000);
-
-                    setTimeout(function () {
-                        clipboard.writeText(messages[index].message);
-                    }, 3000);
-
-                    setTimeout(function () {
-                        ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index].message, action: 'label' });
-                    }, 4000);
-
-                    setTimeout(function () {
-                        fireMouseEvents(sendTextButtonSelector);
-                    }, 5000);
-
-                    if (index == (messages.length - 1)) {
-
-                        if (messagesToSend.length > 0) {
-
-                            isSending = false;
-
-                            document.querySelector(inputNumberSelector).textContent = '';
-
-                            setTimeout(function () {
-
-                                whatsapp.send(messagesToSend[0]);
-                                messagesToSend.shift();
-                            }, 6000);
-
-                        } else {
-
-                            isSending = false;
-                        }
-                    }
-                }, (index * 7000));
-            }
-        }
     } else {
+        console.log('[FILA] Adicionado na fila');
         messagesToSend.push(messages);
     }
+}
+
+// Nova função de enviar mensagens de modo procedural
+
+function send_message(messages) {
+
+    let local_wid = JSON.parse(sessionStorage.getItem('last-wid')) || JSON.parse(localStorage.getItem('last-wid'));
+    let local_bid = JSON.parse(sessionStorage.getItem('WABrowserId')) || JSON.parse(localStorage.getItem('WABrowserId'));
+
+    setTimeout(function() {
+        
+        if (index_message >= messages.length) {
+            
+            console.log('[MENSAGENS] Finalizou todos os envios');
+
+            index_message = 0;
+            isSending = false;
+
+            if (messagesToSend.length > 0) {
+
+                console.log('[FILA] Existe itens na fila de espera');
+
+                setTimeout(function() {
+                    console.log('[FILA] Iniciando envios da fila');
+                    whatsapp.send(messagesToSend[0]);
+                    messagesToSend.shift();
+                }, 3000);
+            }else {
+                isSending = false;
+            }
+
+        }else if (messages[index_message].image) {
+
+            console.log('[TIPO] Mensagem com imagem');
+
+            clipboard.writeText(messages[index_message].wid);
+            fireMouseEvents(sidebarSelector);
+
+            setTimeout(function () {
+                ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index_message].wid, action: 'find' });
+            }, 1000);
+
+            setTimeout(function () {
+                fireMouseEvents(itemListUserSelector);
+            }, 2000);
+
+            setTimeout(function () {
+                clipboard.writeImage(nativeImage.createFromDataURL(messages[index_message].image));
+            }, 3000);
+
+            setTimeout(function () {
+                ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index_message].image, action: 'input' });
+            }, 4000);
+
+            focusElement(inputAreaSelector, function () {
+
+                setTimeout(function () {
+                    clipboard.writeText(messages[index_message].message);
+                }, 1000);
+
+                setTimeout(function () {
+                    ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index_message].message, action: 'label' });
+                }, 2000);
+
+                setTimeout(function () {
+                    fireMouseEvents(sendImageButtonSelector);
+                    send_message(messages);
+                    index_message++;
+                }, 3000);
+                
+            }, false);
+        }else if (!messages[index_message].image) {
+
+            console.log('[TIPO] Mensagem de texto');
+
+            clipboard.writeText(messages[index_message].wid);
+            fireMouseEvents(sidebarSelector);
+
+            setTimeout(function () {
+                ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index_message].wid, action: 'find' });
+            }, 1000);
+
+            setTimeout(function () {
+                fireMouseEvents(itemListUserSelector);
+            }, 2000);
+
+            setTimeout(function () {
+                clipboard.writeText(messages[index_message].message);
+            }, 3000);
+
+            setTimeout(function () {
+                ipcRenderer.send('paste', { wid: local_wid, bid: local_bid, content: messages[index_message].message, action: 'label' });
+            }, 4000);
+
+            setTimeout(function () {
+                fireMouseEvents(sendTextButtonSelector);
+                send_message(messages);
+                index_message++;
+            }, 5000);
+        }
+    }, 3000);
 }
 
 function fireMouseEvents(selector) {
