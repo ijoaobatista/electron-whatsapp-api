@@ -5,13 +5,13 @@ var messagesToSend = [];
 
 var index_message = 0;
 
-var loginSelector = '#app > div > div > div.landing-window > div.landing-main > div > div._2nIZM > div';
-var reloadCodeSelector = '#app > div > div > div.landing-window > div.landing-main > div > div._2nIZM > div > span > div';
-var sidebarSelector = '#side > header > div._3euVJ > div > span > div:nth-child(2) > div';
-var itemListUserSelector = '#app > div > div > div.YD4Yw > div._1-iDe._1xXdX > span > div > span > div > div._1qDvT._2wPpw > div:nth-child(1) > div > div > div:nth-child(2) > div > div';
-var sendTextButtonSelector = '#main > footer > div._3ee1T._1LkpH.copyable-area > div:nth-child(3) > button';
-var sendImageButtonSelector = '#app > div > div > div.YD4Yw > div._1-iDe.Wu52Z > span > div > span > div > div > div._2wPpw._1E3Yq > span > div > div';
-var inputAreaSelector = '#app > div > div > div.YD4Yw > div._1-iDe.Wu52Z > span > div > span > div > div';
+var loginSelector = '#app > div > div > div.landing-window > div.landing-main > div > div._3l6Cf > div';
+var reloadCodeSelector = '#app > div > div > div.landing-window > div.landing-main > div > div._3l6Cf > div > span > div';
+var sidebarSelector = '#side > header > div._1eNef > div > span > div:nth-child(2) > div';
+var itemListUserSelector = '#app > div > div > div._3Bog7 > div.i5ly3._2NwAr > span > div > span > div > div._3Xjbn._1RHZR > div:nth-child(1) > div > div > div:nth-child(2) > div > div';
+var sendTextButtonSelector = '#main > footer > div._3SvgF._1mHgA.copyable-area > div:nth-child(3) > button';
+var sendImageButtonSelector = '#app > div > div > div._3Bog7 > div.i5ly3._2l_Ww > span > div > span > div > div > div._1RHZR.b-lt8 > span > div > div';
+var inputAreaSelector = '#app > div > div > div._3Bog7 > div.i5ly3._2l_Ww > span > div > span > div > div > div._1RHZR.b-lt8';
 
 var whatsapp = {
     getLogin: function (callback) {
